@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ink & Opinión</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; background: #d6ecec; }
+  header { display: flex; align-items: center; padding: 10px 20px; background: #b1d4d5; }
+  header h1 { margin-left: 10px; font-size: 28px; }
+  nav { display: flex; justify-content: center; gap: 20px; padding: 10px; background: #cce7e8; }
+  nav a { text-decoration: none; font-weight: bold; color: black; padding: 6px 14px; border-radius: 10px; }
+  nav a.active { background: #8dbbbb; }
+  .contenedor { display: flex; padding: 20px; }
+  .lista-reseñas { width: 60%; }
+  .reseña { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+  .formulario { width: 35%; background: #b4d2d3; padding: 15px; border-radius: 10px; margin-left: auto; }
+  .formulario input, .formulario textarea { width: 100%; padding: 8px; border: none; border-radius: 8px; margin-bottom: 10px; }
+  .formulario button { width: 100%; padding: 10px; background: #7ea6a7; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+  .buscar { text-align: center; padding: 10px; background: #cce7e8; }
+  .buscar input { width: 60%; padding: 8px; border-radius: 8px; border: none; }
+</style>
+</head>
+<body>
+<header>
+  <img src="https://cdn-icons-png.flaticon.com/512/29/29302.png" width="45" />
+  <h1>Ink & Opinión</h1>
+</header>
+
+<nav>
+  <a href="#" class="active">Explorar</a>
+</nav>
+
+<div class="buscar">
+  <input type="text" id="searchInput" placeholder="Buscar reseñas...">
+</div>
+
+<div class="contenedor">
+  <div class="lista-reseñas" id="listaReseñas">
+    <!-- Aquí aparecerán las reseñas publicadas -->
+  </div>
+
+  <div class="formulario">
+    <h3>Publicar Reseña</h3>
+    <input type="text" id="titulo" placeholder="Título del Libro" />
+    <input type="text" id="autor" placeholder="Autor" />
+    <textarea id="opinion" rows="5" placeholder="Escribe tu opinión..."></textarea>
+    <button onclick="publicar()">Publicar</button>
+  </div>
+</div>
+
+<script>
+function publicar() {
+  let titulo = document.getElementById("titulo").value;
+  let autor = document.getElementById("autor").value;
+  let opinion = document.getElementById("opinion").value;
+
+  if(titulo && autor && opinion){
+    let nueva = document.createElement("div");
+    nueva.classList.add("reseña");
+    nueva.innerHTML = <h4>${titulo}</h4><p><strong>Autor:</strong> ${autor}</p><p>${opinion}</p>;
+    document.getElementById("listaReseñas").prepend(nueva);
+
+    document.getElementById("titulo").value = "";
+    document.getElementById("autor").value = "";
+    document.getElementById("opinion").value = "";
+  }
+}
+
+// Buscador en vivo
+document.getElementById("searchInput").addEventListener("keyup", function() {
+  let filtro = this.value.toLowerCase();
+  let reseñas = document.querySelectorAll('.reseña');
+
+  reseñas.forEach(r => {
+    r.style.display = r.innerText.toLowerCase().includes(filtro) ? "block" : "none";
+  });
+});
+</script>
+
+</body>
+</html>
